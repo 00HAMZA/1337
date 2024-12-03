@@ -106,12 +106,3 @@ int ft_printf(const char *format, ...){
     }
     va_end(args);
 }
-int main(){
-    unsigned int nb = 133788;
-    //char base[] = "0123456789abcdef";
-   // char string[] = "hello";
-   // unsigned int decimal =  (unsigned int)-1;
-   // ft_putnbr_base(nb,base);
-   ft_printf("%p\n", &nb);
-  printf("%p\n", &nb);
-}
