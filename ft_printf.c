@@ -1,52 +1,13 @@
 #include <stdarg.h>
-#include <stdio.h>
 #include <unistd.h>
- char ft_putchar(char c){
-    write(1, &c, 1);
-}
-
-char *ft_putstr(char *str){
-    int i = 0;
-    while (str[i])
-    {
-        write(1, &str[i], 1);
-        i++;
-    }
-    str[i] = '\0';
-    return str;
-}
-
-int ft_putnbr(int n){
-    int nb = 0;
-    if(n < 0){
-        ft_putchar('-');
-        n = -n;
-    }
-    if(n > 9){
-        ft_putnbr(n / 10); 
-    }
-    ft_putchar(n % 10 + '0');
-}
-        int ft_putnbr_base(unsigned long n, const char *base) {
-            int len = 0;
-            if (n >= 16) {
-        len += ft_putnbr_base(n / 16, base);
-            }
-        len += ft_putchar(base[n % 16]);
-        return len;
-        }
-
-void unsigned_int(unsigned int n){
-    if(n > 9){
-        unsigned_int(n / 10);
-    }
-    ft_putchar(n % 10 + '0');
-}
+#include "ft_printf.h"
+#include "utils.h"
 
 int ft_printf(const char *format, ...){
     va_list args;
     va_start(args, format);
     int i = 0;
+    int count = 0;
     while (format[i])
     {
         if(format[i] == '%'  && format[i + 1] == 'c'){
@@ -58,7 +19,10 @@ int ft_printf(const char *format, ...){
         else if(format[i] == '%' && format[i + 1] == 's'){
             i++;
             char *x = va_arg(args, char*);
-            ft_putstr(x);
+            if(x == NULL){
+              ft_putstr("(null)");
+            }
+           ft_putstr(x);
         }
         else if(format[i] == '%' && (format[i + 1] == 'd' || format[i + 1] == 'i')){
             i++;
@@ -105,4 +69,5 @@ int ft_printf(const char *format, ...){
         i++;
     }
     va_end(args);
+    return count ;
 }
